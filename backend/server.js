@@ -1,21 +1,22 @@
 require('dotenv').config()
 
 const express = require('express')
+const workoutRoutes = require('./routes/workouts')
 
 // Express app
 const app = express()
 
 // middleware
+app.use(express.json())
+
 app.use((req, res, next) =>  {
     console.log(req.path, req.method)
     next()
 })
 
-// route handler
-//routes   
-app.get('/', (req, res) => {
-    res.json({mssg: 'Welcome to the app'})
-})
+// routes
+// Only use workoutRoutes when using /api/workouts
+app.use('/api/workouts', workoutRoutes)
 
 //listen for requests
 app.listen(process.env.PORT, () => {
